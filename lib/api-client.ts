@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 // Create an axios instance with base configuration
+const baseURL = (process.env.NEXT_PUBLIC_API_URL || 'https://maan143-hackathon-ii-phase-ii-backend.hf.space')
+  .replace('http://', 'https://');
+
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
