@@ -53,7 +53,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const signUp = async (userData: { email: string; password: string; firstName: string; lastName: string }) => {
+  const signUp = async (userData: { email: string; password: string; first_name: string; last_name: string }) => {
     try {
       const response = await signUpUtil(userData);
       setToken(response.token);

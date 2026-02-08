@@ -2,8 +2,8 @@
 export interface SignUpRequest {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 }
 
 export interface SignInRequest {
@@ -17,8 +17,8 @@ export interface AuthResponse {
   user: {
     id: string;
     email: string;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
   };
 }
 
@@ -49,8 +49,8 @@ export interface AuthContextType {
 export interface User {
   id: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 }
 
 // Error response type

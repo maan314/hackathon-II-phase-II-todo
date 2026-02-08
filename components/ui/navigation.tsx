@@ -44,7 +44,7 @@ export default function Navigation() {
             <div>Loading...</div>
           ) : user ? (
             <>
-              <span className="hidden sm:inline">Welcome, {user.firstName || user.email}</span>
+              <span className="hidden sm:inline">Welcome, {user.first_name || user.email}</span>
               <Button variant="outline" size="sm" onClick={handleSignOut}>
                 Sign Out
               </Button>

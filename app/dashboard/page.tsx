@@ -37,7 +37,7 @@ export default function DashboardPage() {
             <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
               Dashboard
             </h1>
-            <p className="text-gray-400 mt-2">Welcome back, {user?.firstName || user?.email?.split('@')[0]}!</p>
+            <p className="text-gray-400 mt-2">Welcome back, {user?.first_name || user?.email?.split('@')[0]}!</p>
           </div>
           <Button
             onClick={handleSignOut}
@@ -52,7 +52,7 @@ export default function DashboardPage() {
           <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-8 shadow-xl shadow-cyan-500/10">
             <div className="flex items-center space-x-4 mb-6">
               <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 flex items-center justify-center">
-                <span className="text-lg font-bold">{(user?.firstName || user?.email?.charAt(0) || 'U').toUpperCase()}</span>
+                <span className="text-lg font-bold">{(user?.first_name || user?.email?.charAt(0) || 'U').toUpperCase()}</span>
               </div>
               <div>
                 <h2 className="text-2xl font-bold">{user?.firstName || user?.email?.split('@')[0]}</h2>

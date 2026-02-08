@@ -12,10 +12,10 @@ import Notification from '@/components/ui/notification';
 
 // Define the validation schema using Zod
 const signUpSchema = z.object({
-  firstName: z.string()
+  first_name: z.string()
     .min(1, 'First name is required')
     .max(50, 'First name must be less than 50 characters'),
-  lastName: z.string()
+  last_name: z.string()
     .min(1, 'Last name is required')
     .max(50, 'Last name must be less than 50 characters'),
   email: z.string()
@@ -91,35 +91,35 @@ export default function SignUpForm({ onSuccess, onError }: SignUpFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* First Name Field */}
           <div className="space-y-2">
-            <Label htmlFor="firstName" className="text-base font-semibold text-gray-200">
+            <Label htmlFor="first_name" className="text-base font-semibold text-gray-200">
               First Name
             </Label>
             <Input
-              id="firstName"
-              {...register('firstName')}
+              id="first_name"
+              {...register('first_name')}
               placeholder="Enter your first name"
               disabled={isLoading}
               className="h-12 text-base px-4 py-3 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
             />
-            {errors.firstName && (
-              <p className="mt-1 text-sm text-red-400 font-medium">{errors.firstName.message}</p>
+            {errors.first_name && (
+              <p className="mt-1 text-sm text-red-400 font-medium">{errors.first_name.message}</p>
             )}
           </div>
 
           {/* Last Name Field */}
           <div className="space-y-2">
-            <Label htmlFor="lastName" className="text-base font-semibold text-gray-200">
+            <Label htmlFor="last_name" className="text-base font-semibold text-gray-200">
               Last Name
             </Label>
             <Input
-              id="lastName"
-              {...register('lastName')}
+              id="last_name"
+              {...register('last_name')}
               placeholder="Enter your last name"
               disabled={isLoading}
               className="h-12 text-base px-4 py-3 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
             />
-            {errors.lastName && (
-              <p className="mt-1 text-sm text-red-400 font-medium">{errors.lastName.message}</p>
+            {errors.last_name && (
+              <p className="mt-1 text-sm text-red-400 font-medium">{errors.last_name.message}</p>
             )}
           </div>
         </div>

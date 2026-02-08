@@ -65,8 +65,8 @@ export const signUp = async (userData: SignUpRequest): Promise<AuthResponse> => 
     const backendData = {
       email: userData.email,
       password: userData.password,
-      first_name: userData.firstName,
-      last_name: userData.lastName
+      first_name: userData.first_name,
+      last_name: userData.last_name
     };
 
     const response = await api.post<AuthResponse>('/auth/signup', backendData);
