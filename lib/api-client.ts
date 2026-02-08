@@ -1,8 +1,14 @@
 import axios from 'axios';
 
+// Debug: Log environment variable
+console.log('🔍 NEXT_PUBLIC_API_URL from env:', process.env.NEXT_PUBLIC_API_URL);
+
 // Create an axios instance with base configuration
 const baseURL = (process.env.NEXT_PUBLIC_API_URL || 'https://maan143-hackathon-ii-phase-ii-backend.hf.space')
   .replace('http://', 'https://');
+
+// Debug: Log final baseURL
+console.log('✅ Final baseURL being used:', baseURL);
 
 const apiClient = axios.create({
   baseURL,
@@ -15,6 +21,9 @@ const apiClient = axios.create({
 // Request interceptor to add auth token if available
 apiClient.interceptors.request.use(
   (config) => {
+    // Debug: Log the full URL being called
+    console.log('📡 Making request to:', (config.baseURL ?? '') + config.url);
+    
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
