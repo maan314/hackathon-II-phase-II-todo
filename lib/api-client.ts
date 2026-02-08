@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an axios instance with base configuration
 const apiClient = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}/run/`,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   headers: {
     'Content-Type': 'application/json',
   },
