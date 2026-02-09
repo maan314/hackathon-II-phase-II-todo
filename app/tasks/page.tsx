@@ -71,26 +71,37 @@ export default function TasksPage() {
     }
   };
 
-  // Toggle todo completion status
+  // Toggle todo completion status - FIXED VERSION
   const handleToggleTodo = async (id: number, currentStatus: boolean) => {
     const todo = todos.find(t => t.id === id);
+    const newStatus = !currentStatus;
+
+    // Optimistically update UI immediately
+    setTodos(prevTodos => prevTodos.map(t =>
+      t.id === id ? { ...t, is_completed: newStatus } : t
+    ));
 
     try {
       const response = await api.put<Todo>(`/todos/${id}`, {
-        is_completed: !currentStatus
+        is_completed: newStatus
       });
 
-      setTodos(todos.map(todo =>
-        todo.id === id ? { ...todo, is_completed: !currentStatus } : response.data
+      // Update with server response to ensure sync
+      setTodos(prevTodos => prevTodos.map(t =>
+        t.id === id ? response.data : t
       ));
       setError(null);
 
       // Log activity
       logActivity({
-        action: `${!currentStatus ? 'Completed' : 'Reopened'} "${todo?.title || 'a task'}"`,
-        type: !currentStatus ? 'task-completed' : 'task-edited'
+        action: `${newStatus ? 'Completed' : 'Reopened'} "${todo?.title || 'a task'}"`,
+        type: newStatus ? 'task-completed' : 'task-edited'
       });
     } catch (err: any) {
+      // Rollback on error
+      setTodos(prevTodos => prevTodos.map(t =>
+        t.id === id ? { ...t, is_completed: currentStatus } : t
+      ));
       setError(err.message || 'Failed to update todo');
       console.error('Error updating todo:', err);
     }
@@ -102,7 +113,7 @@ export default function TasksPage() {
 
     try {
       await api.delete(`/todos/${id}`);
-      setTodos(todos.filter(todo => todo.id !== id));
+      setTodos(prevTodos => prevTodos.filter(t => t.id !== id));
       setError(null);
 
       // Log activity
@@ -142,7 +153,7 @@ export default function TasksPage() {
         is_completed: editingTodo?.is_completed || false
       });
 
-      setTodos(todos.map(todo =>
+      setTodos(prevTodos => prevTodos.map(todo =>
         todo.id === id ? response.data : todo
       ));
 
