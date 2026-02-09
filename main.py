@@ -9,8 +9,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
-from api.auth import router as auth_router
-from api.todos import router as todos_router
+from backend.api.auth import router as auth_router
+from backend.api.todos import router as todos_router
 from database import engine
 from models import User, Todo  # Import models to register them
 from sqlmodel import SQLModel

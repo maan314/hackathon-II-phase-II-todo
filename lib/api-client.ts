@@ -1,14 +1,6 @@
 import axios from 'axios';
 
-// Debug: Log environment variable
-console.log('🔍 NEXT_PUBLIC_API_URL from env:', process.env.NEXT_PUBLIC_API_URL);
-
-// Create an axios instance with base configuration
-const baseURL = (process.env.NEXT_PUBLIC_API_URL || 'https://maan143-hackathon-ii-phase-ii-backend.hf.space')
-  .replace('http://', 'https://');
-
-// Debug: Log final baseURL
-console.log('✅ Final baseURL being used:', baseURL);
+const baseURL = 'https://maan143-hackathon-ii-phase-ii-backend.hf.space';
 
 const apiClient = axios.create({
   baseURL,
@@ -18,13 +10,9 @@ const apiClient = axios.create({
   },
 });
 
-// Request interceptor to add auth token if available
 apiClient.interceptors.request.use(
   (config) => {
-    // Debug: Log the full URL being called
-    console.log('📡 Making request to:', (config.baseURL ?? '') + config.url);
-    
-    const token = localStorage.getItem('token');
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -35,18 +23,15 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle token expiration or other auth issues
 apiClient.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
-    // Handle 401 Unauthorized - possibly token expired
     if (error.response?.status === 401) {
-      // Remove invalid token
-      localStorage.removeItem('token');
-      // Optionally redirect to login page
-      // window.location.href = '/signin';
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+      }
     }
     return Promise.reject(error);
   }
@@ -54,11 +39,10 @@ apiClient.interceptors.response.use(
 
 export default apiClient;
 
-// Export utility functions for common operations
 export const api = {
-  get: <T>(url: string, config?: any) => apiClient.get<T>(url, config),
-  post: <T>(url: string, data?: any, config?: any) => apiClient.post<T>(url, data, config),
-  put: <T>(url: string, data?: any, config?: any) => apiClient.put<T>(url, data, config),
-  delete: <T>(url: string, config?: any) => apiClient.delete<T>(url, config),
+  get: <T>(url: string, config?: any) => apiClient.get<T>(url + '/', config),  // Add trailing slash
+  post: <T>(url: string, data?: any, config?: any) => apiClient.post<T>(url + '/', data, config),  // Add trailing slash
+  put: <T>(url: string, data?: any, config?: any) => apiClient.put<T>(url, data, config),  // No change for /{id} routes
+  delete: <T>(url: string, config?: any) => apiClient.delete<T>(url, config),  // No change for /{id} routes
   patch: <T>(url: string, data?: any, config?: any) => apiClient.patch<T>(url, data, config),
 };
